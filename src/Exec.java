@@ -42,8 +42,8 @@ public class Exec {
 			if(wesen.get(0).getFlaeche() < topFlaeche) {
 				topFlaeche = wesen.get(0).getFlaeche();
 			}
-			System.out.println(wesen.size());
-//			System.out.println(wesen.get(0).getFlaeche() + "     " + topFlaeche);
+//			System.out.println(wesen.size());
+			System.out.println(wesen.get(0).getFlaeche() + "     " + topFlaeche);
 			
 			List<Individum> nachkommen = new ArrayList<Individum>();
 			//Kiner erzeugen
