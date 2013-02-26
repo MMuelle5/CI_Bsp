@@ -1,8 +1,15 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class CalcHelper {
+	
+	private static List<Integer> retVal;
+	
+	public static List<Integer> getRangList() {
+		return retVal;
+	}
 
 	public static AuswertenUndChecken auswertung(Individum ind) {
 		
@@ -26,7 +33,9 @@ public class CalcHelper {
 			LinkedList<Individum> sorted = new LinkedList<Individum>();
 			
 			int totRaenge = 0;
-			for(Individum ind : wesen) {
+//			for(Individum ind : wesen) {
+			for(int y = wesen.size()-1; y >= 0; y--) {
+				Individum ind = wesen.get(y);
 				AuswertenUndChecken auc = CalcHelper.auswertung(ind);
 				if(auc.isNebenBedErf()) {
 					totRaenge ++;
@@ -47,10 +56,14 @@ public class CalcHelper {
 				}
 			}
 			
-	//		for(Individum iv : sorted) {
-	//			System.out.println(totRaenge +" "+iv.getFlaeche());
-	//			totRaenge --;
-	//		}
+			retVal = new ArrayList<Integer>();
+			for(Individum iv : sorted) {
+//				System.out.println(totRaenge +" "+iv.getFlaeche());
+				for(int i = 0; i < totRaenge; i ++) {
+					retVal.add(iv.getId());
+				}
+				totRaenge --;
+			}
 			
 			return sorted;
 		}

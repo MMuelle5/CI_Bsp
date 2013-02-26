@@ -1,6 +1,7 @@
 
 public class Individum {
 	
+	private int id;
 	private double flaeche;
 
 	private int[] d = new int[5];
@@ -9,6 +10,13 @@ public class Individum {
 	private float f;
 	private float g;
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int[] getD() {
 		return d;
 	}

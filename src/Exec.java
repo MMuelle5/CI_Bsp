@@ -17,6 +17,7 @@ public class Exec {
 		//Initialisierung der Eltern
 		for(int i = 0; i < 30; i++) {
 			Individum ind = new Individum();
+			ind.setId(i);
 			for(int j = 0; j < 5; j ++) {
 				ind.getD()[j] = rand.nextInt(2);
 				ind.getH()[j] = rand.nextInt(2);
@@ -37,22 +38,59 @@ public class Exec {
 			
 			//Auswerten und gueltige selektieren
 			wesen = CalcHelper.getAusgewerteteList(wesen);
+			List<Integer> rangSel = CalcHelper.getRangList();
 			
 			highScore.add(wesen.get(0));
 			if(wesen.get(0).getFlaeche() < topFlaeche) {
 				topFlaeche = wesen.get(0).getFlaeche();
 			}
+			
 //			System.out.println(wesen.size());
 			System.out.println(wesen.get(0).getFlaeche() + "     " + topFlaeche);
 			
-			List<Individum> nachkommen = new ArrayList<Individum>();
 			//Kiner erzeugen
-			for(int i = 0; i < 30; i+=2) {
-				nachkommen.addAll(GenerateNachkommen.getNachkommen(wesen.get(rand.nextInt(wesen.size()-1)), wesen.get(rand.nextInt(wesen.size()-1))));
+//			List<Individum> nachkommen = new ArrayList<Individum>();
+//			for(int i = 0; i < 30; i+=2) {
+//				nachkommen.addAll(GenerateNachkommen.getNachkommen(wesen.get(rand.nextInt(wesen.size()-1)), wesen.get(rand.nextInt(wesen.size()-1))));
+//			}
+//			
+//			wesen = new ArrayList<Individum>();
+//			wesen.addAll(nachkommen);
+			for(int i = 0; i < 10; i+=2) {
+				int rand1 = rand.nextInt(rangSel.size()-1);
+				int rand2 = rand.nextInt(rangSel.size()-1);
+				Individum rand1Ind = null;
+				Individum rand2Ind = null;
+				
+				for(Individum ind : wesen) {
+					if(ind.getId() == rangSel.get(rand1)) {
+						rand1Ind = ind;
+					}
+					if(ind.getId() == rangSel.get(rand2)) {
+						rand2Ind = ind;
+					}
+				}
+				
+				List<Individum> child = GenerateNachkommen.getNachkommen(rand1Ind, rand2Ind);
+				if(wesen.size() >= 30) {
+					for(int j = rangSel.size()-1; j >= 0; j --) {
+						if(rangSel.get(j) == rand1Ind.getId()) {
+							rangSel.remove(j);
+						}
+					}
+					wesen.remove(rand1Ind);
+				}
+				if(wesen.size() >= 29) {
+					for(int j = rangSel.size()-1; j >= 0; j --) {
+						if(rangSel.get(j) == rand2Ind.getId()) {
+							rangSel.remove(j);
+						}
+					}
+					wesen.remove(rand2Ind);	
+				}
+				
+				wesen.addAll(child);
 			}
-			
-			wesen = new ArrayList<Individum>();
-			wesen.addAll(nachkommen);
 			//Mutation der Wesen
 			for(Individum ind : wesen) {
 				Mutieren.mutieren(ind);

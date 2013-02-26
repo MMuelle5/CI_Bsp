@@ -4,6 +4,8 @@ import java.util.Random;
 
 
 public class GenerateNachkommen {
+	
+	private static int MAX_ID = 30;
 
 	public static List<Individum> getNachkommen(Individum par1, Individum par2) {
 		
@@ -19,6 +21,11 @@ public class GenerateNachkommen {
 		Individum child1 = new Individum();
 		Individum child2 = new Individum();
 		
+		MAX_ID ++;
+		child1.setId(MAX_ID);
+
+		MAX_ID ++;
+		child2.setId(MAX_ID);
 		
 		for(int i = 0; i < 10; i++) {
 			if(i < 5) {
